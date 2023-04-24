@@ -5,5 +5,7 @@
   collections:
     - xstem.system
   roles:
+    - { role: generic, tags: [ 'generic' ] }
     - { role: ssh, tags: [ 'ssh' ] }
+    - { role: motd, tags: [ 'motd' ] }
   tags: [ 'deploy', 'system' ]
