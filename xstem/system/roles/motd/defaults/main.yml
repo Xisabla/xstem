@@ -1,0 +1,3 @@
+---
+# Motd template path
+motd_template: motd_default.j2

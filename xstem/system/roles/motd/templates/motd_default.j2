@@ -1,0 +1,17 @@
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠀⠀     
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡶⠛⠉⠉⢹⡆⠀     
+⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⢰⡏⢀⡴⠀⠀⣾⠁⠀     
+⠰⣟⠋⠉⠙⠛⢶⣄⠀⠀⠀⢸⣷⠟⠁⣀⡼⠋⠀⠀          --- {{ ansible_hostname }} ---
+⠀⢻⡄⠀⠰⢦⣄⣹⡆⠀⠀⣼⠿⠛⠛⠉⠀⠀⠀⠀    
+⠀⠀⠻⢦⣄⣀⣈⣻⣿⡀⢰⡏⠀⠀⠀⠀⠀⣀⠀⠀    OS: {{ hostvars[inventory_hostname].ansible_distribution }} {{ hostvars[inventory_hostname].ansible_distribution_version}} ({{ hostvars[inventory_hostname].ansible_distribution_release }})
+⠀⠀⠀⠀⠈⠉⠉⠉⠈⠻⣼⡇⠀⢀⡴⠛⠋⠉⢙⡿    Kernel: {{ hostvars[inventory_hostname].ansible_kernel }}
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡇⢀⣾⣥⠾⠃⢀⣼⠃    
+⠀⠀⠀⠀⣤⣤⣤⣤⣀⠀⢸⣇⣼⠿⠷⠶⠶⠛⠁⠀    vCPUs: {{ hostvars[inventory_hostname].ansible_processor_vcpus }} - {{ hostvars[inventory_hostname].ansible_processor[2] }}
+⠀⠀⠀⠀⢻⡄⠀⣤⣹⣧⢸⡿⠁⠀⠀⠀⠀⠀⠀⠀    RAM: {{ hostvars[inventory_hostname].ansible_memory_mb.real.total }} MB
+⠀⠀⠀⠀⠀⠛⢶⣤⣽⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀    Swap: {{ hostvars[inventory_hostname].ansible_memory_mb.swap.total }} MB
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀    
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡼⢧⣄⡀⠀⠀⠀⠀⠀⠀    IP: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }} / {{ hostvars[inventory_hostname].ansible_default_ipv4.netmask }}
+⠀⠀⠀⠀⣀⣀⣤⣾⣋⣁⣀⣀⣈⣙⣷⣤⣀⣀⠀⠀    MAC: {{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}
+⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠀    
+   [Ansible managed]
+
