@@ -1,0 +1,9 @@
+# System deployment tasks
+- hosts: machines
+  become: true
+  gather_facts: true
+  collections:
+    - xstem.system
+  roles:
+    - { role: ssh, tags: [ 'ssh' ] }
+  tags: [ 'deploy', 'system' ]

@@ -1,0 +1,39 @@
+---
+# Install SSH packages
+- name: Install SSH packages
+  package:
+    name: "{{ ssh_packages + ssh_packages_extra }}"
+    state: present
+  tags: [ 'ssh', 'ssh.packages' ]
+
+# Copy ssh banner template if defined
+- name: Create SSH banner
+  template:
+    src: "{{ ssh_banner_template }}"
+    dest: /etc/ssh/sshd_banner
+    owner: root
+    group: root
+    mode: 0644
+  when: ssh_banner_template is defined
+  tags: [ 'ssh', 'ssh.banner' ]
+
+# Copy sshd_config template
+- name: Copy SSH config
+  template:
+    src: "{{ sshd_config_template }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0600
+  notify: Restart SSH
+  tags: [ 'ssh', 'ssh.config' ]
+
+# Copy ssh_config template
+- name: Copy SSH config
+  template:
+    src: "{{ ssh_config_template }}"
+    dest: /etc/ssh/ssh_config
+    owner: root
+    group: root
+    mode: 0600
+  tags: [ 'ssh', 'ssh.config' ]

@@ -1,0 +1,8 @@
+{% for include in ssh_includes %}
+Include {{ include }}
+{% endfor %}
+
+
+#[[ ------------------- Config extra ------------------- ]]
+
+{{ ssh_config_extra | join('\n') }}

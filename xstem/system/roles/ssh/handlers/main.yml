@@ -1,0 +1,7 @@
+---
+# Restart SSH handler
+- name: Restart SSH
+  service:
+    name: sshd
+    state: restarted
+  tags: [ 'ssh', 'ssh.restart' ]

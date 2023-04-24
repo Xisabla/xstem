@@ -1,0 +1,43 @@
+---
+# SSH mandatory packages
+ssh_packages:
+  - openssh
+  - openssh-server
+
+# SSH extra packages
+ssh_packages_extra: []
+
+# SSH banner template path
+ssh_banner_template: sshd_banner_default.j2
+
+# SSH daemon config template path
+sshd_config_template: sshd_config_default.j2
+
+# SSH client config template path
+ssh_config_template: ssh_config_default.j2
+
+# SSH daemon config defaults
+sshd_includes:
+  - "/etc/ssh/sshd_config.d/*.conf"
+sshd_host_keys: []
+
+sshd_accept_env: "LANG LC_*"
+sshd_authorize_keys_file: ".ssh/authorized_keys"
+sshd_banner: "/etc/ssh/sshd_banner"
+sshd_password_authentication: "no"
+sshd_port: "22"
+sshd_subsystem: "sftp /usr/libexec/openssh/sftp-server"
+sshd_use_pam: "no"
+sshd_print_motd: "yes"
+
+# SSH daemon config extra
+sshd_config_extra:
+  - "# No extra config"
+
+# SSH client config defaults
+ssh_includes:
+  - "/etc/ssh/ssh_config.d/*.conf"
+
+# SSH client config extra
+ssh_config_extra:
+  - "# No extra config"
