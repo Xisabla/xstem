@@ -1,0 +1,9 @@
+---
+disks_packages:
+  - parted
+  - lvm2
+  - xfsprogs
+
+disks_unit: GiB
+
+disks_devices: []

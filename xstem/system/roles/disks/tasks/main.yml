@@ -1,0 +1,40 @@
+---
+# Install required packages
+- name: Install required packages
+  package:
+    name: "{{ disks_packages }}"
+    state: latest
+  tags: [ 'disks', 'disks.packages' ]
+
+# Read and configure partitions
+- name: Read and configure partitions
+  include_tasks: partitions.yml
+  loop: "{{ disks_devices }}"
+  loop_control:
+    loop_var: device
+  tags: [ 'disks', 'disks.partitions' ]
+
+# LVM
+
+# Filesystems
+
+# Mounts
+
+# # tasks file for disks
+# # - debug: msg="number={{ item.1.name | replace(item.0.name, '') }}"
+
+# - name: Create partitions
+#   parted:
+#     device: "{{ item.0.name }}"
+#     number: "{{ item.1.name | replace(item.0.name, '') | int }}"
+#     state: present
+#     part_end: "{{ item.1.size }}"
+#     resize: yes
+#   with_subelements:
+#     - "{{ disks_devices }}"
+#     - partitions
+#   when: item.1.name.startswith(item.0.name)
+#   register: output
+#   # failed_when: no
+
+# - debug: msg="{{ output }}"

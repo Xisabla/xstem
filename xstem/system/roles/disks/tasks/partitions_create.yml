@@ -1,0 +1,43 @@
+---
+# Get partition info
+- name: Get partition info
+  parted:
+    device: "{{ device.name }}"
+    unit: "{{ disks_unit }}"
+    state: info
+  register: parted_info
+
+# Create first partition
+- name: Create first partition
+  parted:
+    device: "{{ device.name }}"
+    number: "{{ outer_item.name | replace(device.name, '') | int }}"
+    fs_type: "{{ outer_item.fstype | default('') }}"
+    flags: "{{ flags | select() | list }}"
+    part_start: "0%"
+    part_end: "{{ outer_item.size }}{{ disks_unit }}"
+    unit: "{{ disks_unit }}"
+    state: present
+  vars:
+    flags:
+      - "{{ outer_item.boot | default(false) | ternary('boot', '') }}"
+      - "{{ outer_item.logical_volume | default(false) | ternary('lvm', '') }}"
+  when: parted_info.partitions | length == 0
+
+# Create partition alongside existing
+- name: Create partition alongside existing
+  parted:
+    device: "{{ device.name }}"
+    number: "{{ outer_item.name | replace(device.name, '') | int }}"
+    fs_type: "{{ outer_item.fstype | default('') }}"
+    flags: "{{ flags | select() | list }}"
+    part_start: "{{ last_partition.end | default('0') }}{{ disks_unit }}"
+    part_end: "{{ last_partition.end | default('0') | float + outer_item.size }}{{ disks_unit }}"
+    unit: "{{ disks_unit }}"
+    state: present
+  vars:
+    flags:
+      - "{{ outer_item.boot | default(false) | ternary('boot', '') }}"
+      - "{{ outer_item.logical_volume | default(false) | ternary('lvm', '') }}"
+    last_partition: "{{ parted_info.partitions | sort(attribute='num') | last }}"
+  when: parted_info.partitions | length > 0

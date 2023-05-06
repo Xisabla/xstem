@@ -1,0 +1,60 @@
+---
+# List partitions on device
+- name: List partitions on device
+  parted:
+    device: "{{ device.name }}"
+    unit: "{{ disks_unit }}"
+    state: info
+  register: parted_info
+  tags: [ 'disks', 'disks.partitions.list' ]
+
+# Check present partitions
+- name: Check that present partitions are wanted
+  assert:
+    that:
+      - item.0 is defined
+      - device.name in item.0.name | default('')
+      - "{{ item.0.name | default('') | replace(device.name, '') | int }} == {{ item.1.num }}"
+      # - item.0.fstype | default('') == item.1.fstype
+      # - item.0.boot | default(false) and "boot" in item.1.flags | default([]) or not item.0.boot | default(false) and "boot" not in item.1.flags | default([])
+      # - item.0.logical_volume | default(false) and "lvm" in item.1.flags | default([]) or not item.0.logical_volume | default(false) and "lvm" not in item.1.flags | default([])
+      # - item.0.size == item.1.size
+    fail_msg: "Partition {{ device.name }}{{ item.1.num }} is not expected in inventory"
+  when: item.1
+  with_together:
+    - "{{ device.partitions }}"
+    - "{{ parted_info.partitions }}"
+
+# Create partitions
+- name: Create partitions
+  include_tasks: partitions_create.yml
+  loop: "{{ device.partitions }}"
+  loop_control:
+    loop_var: outer_item
+  tags: [ 'disks', 'disks.partitions.create' ]
+
+# # Create partitions
+# - parted:
+#     device: "{{ device.name }}"
+#     number: "{{ item.1.num }}"
+#     state: present
+#     part_end: "{{ item.1.size }}"
+#     resize: yes
+#   when: item.1
+#   with_together:
+#     - "{{ device.partitions }}"
+#     - "{{ parted_info.partitions }}"
+#   tags: [ 'disks', 'disks.partitions.create' ]
+
+# Check present partitions, loop over parted_info.results and disks_devices and compare name, num (computed) and size, fails if there is a difference
+# - name: Check present partitions
+#   assert:
+#     that:
+#       - item.0.name == item.1.name
+#       - item.0.size == item.1.size
+#       - item.0.num == item.1.num
+#   with_nested:
+#     - "{{ disks_devices }}"
+#     - "{{ parted_info.results }}"
+#   tags: [ 'disks', 'disks.partitions.check' ]
+

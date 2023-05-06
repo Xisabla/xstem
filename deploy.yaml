@@ -1,11 +1,15 @@
-# System deployment tasks
 - hosts: machines
   become: true
   gather_facts: true
+
+# System deployment tasks
+- hosts: machines
+  become: true
   collections:
     - xstem.system
   roles:
     - { role: generic, tags: [ 'generic' ] }
+    - { role: disks, tags: [ 'disks' ] }
     - { role: ssh, tags: [ 'ssh' ] }
     - { role: motd, tags: [ 'motd' ] }
   tags: [ 'deploy', 'system' ]

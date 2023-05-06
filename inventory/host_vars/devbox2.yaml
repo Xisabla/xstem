@@ -1,0 +1,99 @@
+# SSH
+sshd_permit_root_login: "no"
+
+# ⚠️ Messy testing down here 👀
+
+# Disks
+# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/general/lvol_module.html
+# https://github.com/chaordic/ansible-role-disk-part/blob/master/defaults/main.yml
+# disks_devices:
+#   - name: /dev/sda        # Check existence
+#     partitions:
+#       - name: /dev/sda1   # Parted, present, number "1"
+#         mount: /boot
+#         size: 1GiB
+#         fstype: ext4
+#       - name: /dev/sda2   # Parted, present, number "2"
+#         logical_volume: yes
+#         size: 199GiB
+disks_devices:
+  - name: /dev/sdb
+    partitions:
+      - name: /dev/sdb1
+        boot: yes
+        # mount: /boot
+        size: 1
+        fstype: xfs
+      - name: /dev/sdb2
+        logical_volume: yes
+        size: 10
+
+# + resize: yes/no ?
+
+# disks_volumes:
+#   - vg_name: vg00
+#     pvs:
+#       - /dev/sda2
+#     thin_pools:
+#       - name: thinpool
+#         size: 100G
+#     lvs:
+#       - name: root
+#         size: 60G
+#         fstype: ext4
+#         mount: /
+#         mounted: yes
+#         thin: yes
+#       - name: home
+#         size: 30G
+#         fstype: ext4
+#         mount: /home
+#         mounted: yes
+#         thin: yes
+#       - name: var
+#         size: 50G
+#         fstype: ext4
+#         mount: /var
+#         mounted: yes
+#         thin: yes
+#       - name: swap
+#         size: 8G
+#         fstype: swap
+#         mount: swap
+#         mounted: yes
+
+# + force: yes/no
+# + opts: <string>
+# + resizefs: yes/no
+
+# + shrink: yes/no ?
+# + snapshot: yes/no ?
+
+# Users
+
+# Unclear:
+# 1000000: system users
+# 2000000: service users
+# 6000000: dev users
+
+users:
+  - user: system
+    id: 1000000
+    groups: [ 'system', 'wheel' ]
+  - user: gautier
+    id: 6000001
+    groups: [ 'dev', 'docker' ]
+
+# Sudo
+# https://github.com/GROG/ansible-role-sudo
+# sudo_list:
+#   - name: system
+#     sudo:
+#       hosts: ALL
+#       as: ALL
+#       commands: ALL
+#       nopasswd: yes
+
+# Env ???
+# Repos ???

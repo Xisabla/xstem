@@ -1,0 +1,21 @@
+# Extra packages to install on all machines
+generic_packages_extra:
+  - ansible
+  - atop
+  - curl
+  - git
+  - htop
+  - iftop
+  - iotop
+  - lsof
+  - netcat
+  - sysstat
+  - tcpdump
+  - tmux
+  - unzip
+  - vim
+  - wget
+  - zip
+
+# SSH
+sshd_permit_root_login: "no"
