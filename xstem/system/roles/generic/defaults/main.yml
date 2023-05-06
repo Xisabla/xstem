@@ -1,0 +1,15 @@
+---
+# Packages that must be installed before any other package
+pre_generic_packages:
+  - epel-release
+
+# Very basic packages that must be installed on all machines
+generic_packages:
+  - glibc-common
+  - glibc-langpack-en
+
+# Extra packages to install on all machines
+generic_packages_extra: []
+
+# Timezone to set
+generic_timezone: "UTC"

@@ -1,0 +1,29 @@
+---
+# Install pre-generic packages
+- name: Install pre-generic packages
+  package:
+    name: "{{ pre_generic_packages }}"
+    state: latest
+  tags: [ 'generic', 'generic.pre' ]
+
+# Perform system update
+- name: System update
+  package:
+    name: '*'
+    state: latest
+  tags: [ 'generic', 'generic.update' ]
+  notify: Reboot
+
+# Install basic packages
+- name: Install basic packages
+  package:
+    name: "{{ generic_packages + generic_packages_extra }}"
+    state: latest
+  tags: [ 'generic', 'generic.packages' ]
+  notify: Reboot
+
+# Set timezone to UTC
+- name: Set timezone to UTC
+  timezone:
+    name: "{{ generic_timezone }}"
+  tags: [ 'generic', 'generic.timezone' ]

@@ -1,0 +1,6 @@
+---
+# Reboot the machine
+- name: Reboot
+  reboot:
+    reboot_timeout: 600
+    msg: "Reboot initiated by Ansible for {{ ansible_hostname }}"
